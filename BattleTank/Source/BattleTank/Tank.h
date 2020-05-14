@@ -53,5 +53,9 @@ private:
 
 	// Local barrel referenece for spawning projectile
 	UTankBarrel* Barrel = nullptr;
+
+	float ReloadTimeInSeconds = 3;
+
+	double LastFireTime = 0;
 };
 
