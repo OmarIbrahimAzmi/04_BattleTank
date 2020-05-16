@@ -1,4 +1,5 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Press ST:art.
+
 
 #include "BattleTank.h"
 #include "GameFramework/ProjectileMovementComponent.h"
