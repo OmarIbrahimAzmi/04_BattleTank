@@ -3,16 +3,8 @@
 #include "BattleTank.h"
 #include "Engine/World.h"
 #include "TankAimingComponent.h"
-#include "Tank.h" // So we can impliment OnDeath
 #include "TankPlayerController.h"
-
-void ATankPlayerController::BeginPlay()
-{
-	Super::BeginPlay();
-	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
-	if (!ensure(AimingComponent)) { return; }
-	FoundAimingComponent(AimingComponent);
-}
+#include "Tank.h" // So we can impliment OnDeath
 
 void ATankPlayerController::SetPawn(APawn* InPawn)
 {
@@ -29,10 +21,16 @@ void ATankPlayerController::SetPawn(APawn* InPawn)
 
 void ATankPlayerController::OnPossedTankDeath()
 {
-	UE_LOG(LogTemp, Error, TEXT("Player Tank died."));
-	//StartSpectatingOnly();
+	StartSpectatingOnly();
 }
 
+void ATankPlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(AimingComponent)) { return; }
+	FoundAimingComponent(AimingComponent);
+}
 
 void ATankPlayerController::Tick(float DeltaTime)
 {
@@ -61,7 +59,6 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 	int32 ViewportSizeX, ViewportSizeY;
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
 	auto ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
-	/*UE_LOG(LogTemp, Warning, TEXT("ScreenLocation: %s"), *ScreenLocation.ToString()); // To log out where the on the screen is the crosshair at.*/
 
 	// "De-project" the screen position of the crosshair to a world direction
 	FVector LookDirection;
