@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "PhysicsEngine/RadialForceComponent.h"
 #include "Projectile.generated.h"
 
 class UProjectileMovementComponent;
@@ -25,19 +26,21 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	UProjectileMovementComponent* ProjectileMovement = nullptr;
-
-	UPROPERTY(VisibleAnywhere, Category = "Setup")
-	UStaticMeshComponent* CollisionMesh = nullptr;
-
-	UPROPERTY(VisibleAnywhere, Category = "Setup")
-	UParticleSystemComponent* LaunchBlast = nullptr;
-
-	UPROPERTY(VisibleAnywhere, Category = "Setup")
-	UParticleSystemComponent* ImpactBlast = nullptr;
-
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
+	UProjectileMovementComponent* ProjectileMovement = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UStaticMeshComponent* CollisionMesh = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UParticleSystemComponent* LaunchBlast = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UParticleSystemComponent* ImpactBlast = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	URadialForceComponent* ExplosionForce = nullptr;
 
 };
