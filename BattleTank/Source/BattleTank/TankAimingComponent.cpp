@@ -36,16 +36,21 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 {
 	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
 	{
-		FiringState = EFiringStatus::Reloading;
+		FiringState = EFiringState::Reloading;
 	}
 	else if (IsBarrelMoving())
 	{
-		FiringState = EFiringStatus::Aiming;
+		FiringState = EFiringState::Aiming;
 	}
 	else
 	{
-		FiringState = EFiringStatus::Locked;
+		FiringState = EFiringState::Locked;
 	}
+}
+
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
 }
 
 bool UTankAimingComponent::IsBarrelMoving()
@@ -102,7 +107,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector TargetDirection)
 
 void UTankAimingComponent::Fire()
 {
-	if (FiringState != EFiringStatus::Reloading)
+	if (FiringState != EFiringState::Reloading)
 	{
 		// Spawn a projectile at the socket location on the barrel
 		if (!ensure(Barrel)) { return; }
@@ -117,3 +122,4 @@ void UTankAimingComponent::Fire()
 		LastFireTime = FPlatformTime::Seconds();
 	}
 }
+
