@@ -29,6 +29,6 @@ private:
 
 	void DriveTrack(float CurrentThrottle);
 
-	TArray<class ASprungwheel*> GetWheels() const;
+	TArray<class ASprungWheel*> GetWheels() const;
 };
 
